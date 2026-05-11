@@ -4,6 +4,8 @@ import com.example.JobDock.Exceptions.EmailAlreadyExistsException;
 import com.example.JobDock.Model.User;
 import com.example.JobDock.Service.JwtService;
 import com.example.JobDock.Service.UserService;
+import com.example.JobDock.dto.Login.LoginRequest;
+import com.example.JobDock.dto.Login.LoginResponse;
 import com.example.JobDock.dto.RegisterRequest;
 import com.example.JobDock.dto.UserResponse;
 import jakarta.validation.Valid;
@@ -39,10 +41,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody UserResponse userResponse) {
-        String token = jwtService.generateToken(userResponse.getEmail(), userResponse.getRole());
-        System.out.println(token);
-        return token;
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest userData) {
+        LoginResponse response = userService.login(userData);
+        return ResponseEntity.ok(response);
     }
 }
 
