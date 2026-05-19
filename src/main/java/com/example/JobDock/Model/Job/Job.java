@@ -47,6 +47,6 @@ public class Job {
     @Column(nullable = false)
     String company;
 
-    String Location;
+    String location;
 
 }
