@@ -1,7 +1,6 @@
 package com.example.JobDock.Service;
 
 import com.example.JobDock.Model.Role;
-import com.example.JobDock.dto.UserResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.lang.Function;

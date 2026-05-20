@@ -3,21 +3,12 @@ package com.example.JobDock.Service;
 import com.example.JobDock.Exceptions.EmailAlreadyExistsException;
 import com.example.JobDock.Model.User;
 import com.example.JobDock.Repository.UserRepository;
-import com.example.JobDock.config.SecurityConfig;
 import com.example.JobDock.dto.Login.LoginRequest;
 import com.example.JobDock.dto.Login.LoginResponse;
 import com.example.JobDock.dto.RegisterRequest;
 import com.example.JobDock.dto.UserResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {

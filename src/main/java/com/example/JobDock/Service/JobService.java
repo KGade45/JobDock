@@ -1,18 +1,12 @@
 package com.example.JobDock.Service;
 
 import com.example.JobDock.Model.Job.Job;
-import com.example.JobDock.Model.Job.JobType;
 import com.example.JobDock.Model.User;
 import com.example.JobDock.Repository.JobRepository;
 import com.example.JobDock.dto.Job.JobRequest;
 import com.example.JobDock.dto.Job.JobResponse;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
