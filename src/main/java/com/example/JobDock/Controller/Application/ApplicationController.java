@@ -1,11 +1,8 @@
 package com.example.JobDock.Controller.Application;
 
 import com.example.JobDock.Model.Application.Application;
-import com.example.JobDock.Model.Job.Job;
 import com.example.JobDock.Model.User;
-import com.example.JobDock.Repository.JobRepository;
 import com.example.JobDock.Service.ApplicationService;
-import com.example.JobDock.Service.JobService;
 import com.example.JobDock.Service.UserService;
 import com.example.JobDock.dto.Application.ApplicationRequest;
 import org.springframework.http.ResponseEntity;

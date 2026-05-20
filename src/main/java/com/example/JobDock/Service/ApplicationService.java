@@ -8,7 +8,6 @@ import com.example.JobDock.Model.User;
 import com.example.JobDock.Repository.ApplicationRepository;
 import com.example.JobDock.Repository.JobRepository;
 import jakarta.persistence.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
