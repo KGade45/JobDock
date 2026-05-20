@@ -33,4 +33,24 @@ public class GlobalExceptionHandler {
 //
 //        return ResponseEntity.badRequest().body(errors);
 //    }
+
+    @ExceptionHandler(AlreadyAppliedToJobException.class)
+    public ResponseEntity<Map<String, Object>> handleAlreadyApplied(AlreadyAppliedToJobException ax) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("status", HttpStatus.CONFLICT.value());
+        body.put("error", "Conflict");
+        body.put("message", ax.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
+
+    @ExceptionHandler(JobNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleJobNotFound(JobNotFoundException jx) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("status", HttpStatus.CONFLICT.value());
+        body.put("error", "Conflict");
+        body.put("message", jx.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
 }
