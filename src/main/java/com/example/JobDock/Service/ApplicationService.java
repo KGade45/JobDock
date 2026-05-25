@@ -1,6 +1,8 @@
 package com.example.JobDock.Service;
 
+import com.example.JobDock.Controller.Application.ApplicationController;
 import com.example.JobDock.Exceptions.AlreadyAppliedToJobException;
+import com.example.JobDock.Exceptions.UnauthorizedActionException;
 import com.example.JobDock.Model.Application.Application;
 import com.example.JobDock.Model.Application.ApplicationStatus;
 import com.example.JobDock.Model.Job.Job;
@@ -9,6 +11,9 @@ import com.example.JobDock.Repository.ApplicationRepository;
 import com.example.JobDock.Repository.JobRepository;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class ApplicationService {
@@ -34,6 +39,23 @@ public class ApplicationService {
         application.setStatus(ApplicationStatus.APPLIED);
         application.setResumeUrl(resumeUrl);
         application.setUpdatedAt(application.getAppliedAt());
+        appRepo.save(application);
+        return application;
+    }
+
+    public List<Application> myApplications(User user) {
+        return appRepo.findAllByApplicant(user);
+    }
+
+    public Application updateStatus(User user, long id, ApplicationStatus status) {
+        Application application = appRepo.findById(id)
+                .orElseThrow();
+        if(!Objects.equals(application.getJob().getPostedBy().getId(), user.getId())) {
+            throw new UnauthorizedActionException();
+        }
+
+        application.setStatus(status);
+        application.setUpdatedAt(LocalDateTime.now());
         appRepo.save(application);
         return application;
     }

@@ -1,5 +1,6 @@
 package com.example.JobDock.Controller.Job;
 
+import com.example.JobDock.Model.Application.Application;
 import com.example.JobDock.Model.User;
 import com.example.JobDock.Service.JobService;
 import com.example.JobDock.Service.UserService;
@@ -28,8 +29,7 @@ public class JobController {
     @PostMapping("/")
     @PreAuthorize("hasRole('RECRUITER')")
     public ResponseEntity<JobResponse> postJob(@Valid @RequestBody JobRequest request) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.loadUserByEmail(email);
+        User user = this.getUser();
         JobResponse response = jobService.postJob(request, user);
         return ResponseEntity.ok(response);
     }
@@ -37,5 +37,18 @@ public class JobController {
     @GetMapping("/")
     public ResponseEntity<List<JobResponse>> getAllJobs() {
         return ResponseEntity.ok(jobService.getAllJobs());
+    }
+
+    @GetMapping("/{jobId}/applications")
+    @PreAuthorize("hasRole('RECRUITER')")
+    public ResponseEntity<List<Application>> getAllApplications(@PathVariable long jobId) {
+        User user = this.getUser();
+        return ResponseEntity.ok(jobService.getAllApplications(jobId, user));
+    }
+
+    // helper methods
+    private User getUser() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userService.loadUserByEmail(email);
     }
 }

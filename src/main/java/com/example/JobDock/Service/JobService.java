@@ -1,22 +1,30 @@
 package com.example.JobDock.Service;
 
+import com.example.JobDock.Exceptions.JobNotFoundException;
+import com.example.JobDock.Exceptions.UnauthorizedActionException;
+import com.example.JobDock.Model.Application.Application;
 import com.example.JobDock.Model.Job.Job;
 import com.example.JobDock.Model.User;
+import com.example.JobDock.Repository.ApplicationRepository;
 import com.example.JobDock.Repository.JobRepository;
 import com.example.JobDock.dto.Job.JobRequest;
 import com.example.JobDock.dto.Job.JobResponse;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class JobService {
 
     private JobRepository jobRepo;
+    private ApplicationRepository appRepo;
 
-    JobService(JobRepository jobRepo) {
+    JobService(JobRepository jobRepo, ApplicationRepository appRepo) {
         this.jobRepo = jobRepo;
+        this.appRepo = appRepo;
     }
 
     public List<JobResponse> getAllJobs() {
@@ -60,5 +68,15 @@ public class JobService {
 
 
         return response;
+    }
+
+    public List<Application> getAllApplications(long jobId, User user) {
+        Job job = jobRepo.findById(jobId)
+                .orElseThrow();
+
+        if(!Objects.equals(job.getPostedBy().getId(), user.getId())) {
+            throw new UnauthorizedActionException();
+        }
+        return appRepo.findAllByJob(job);
     }
 }
